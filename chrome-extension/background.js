@@ -43,10 +43,12 @@ chrome.browserAction.onClicked.addListener(activeTab => {
 const ID_OPEN_AT_MAIN_DISPLAY = "open-at-main-display";
 
 function createContextMenus() {
-	chrome.contextMenus.create({
-		title: "リンクを新しいwindowで開く（メインディスプレイ最大化）",
-		contexts: ["link"],
-		id: ID_OPEN_AT_MAIN_DISPLAY
+	chrome.contextMenus.removeAll(() => {
+		chrome.contextMenus.create({
+			title: "r: リンク先を新しいwindowで開く（メインディスプレイ最大化）",
+			contexts: ["link"],
+			id: ID_OPEN_AT_MAIN_DISPLAY
+		});
 	});
 }
 
