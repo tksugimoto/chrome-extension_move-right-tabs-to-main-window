@@ -57,13 +57,16 @@ chrome.runtime.onStartup.addListener(createContextMenus);
 createContextMenus();
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
+	console.log('chrome.contextMenus.onClicked', info, tab);
 	if (info.menuItemId === ID_OPEN_AT_MAIN_DISPLAY) {
+		console.log('chrome.windows.create', info.linkUrl);
 		chrome.windows.create({
 			url: info.linkUrl,
 			top: 0,
 			left: 0,
 			incognito: tab.incognito
 		}, createdWindow => {
+			console.log('created', info.linkUrl, createdWindow);
 			chrome.windows.update(createdWindow.id, {
 				state: "maximized"
 			});
