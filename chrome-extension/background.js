@@ -54,6 +54,7 @@ function createContextMenus() {
 
 chrome.runtime.onInstalled.addListener(createContextMenus);
 chrome.runtime.onStartup.addListener(createContextMenus);
+createContextMenus();
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
 	if (info.menuItemId === ID_OPEN_AT_MAIN_DISPLAY) {
