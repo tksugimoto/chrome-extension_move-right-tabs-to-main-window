@@ -24,7 +24,7 @@
 	},
 
 	"commands": {
-		"_execute_action": {
+		"execute": {
 			"description": "右側のタブを別のwindowに移動",
 			"suggested_key": {
 				"default": "Ctrl+R"

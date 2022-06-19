@@ -1,8 +1,6 @@
 'use strict';
 
-// ショートカットキー
-// クリック時
-chrome.action.onClicked.addListener(activeTab => {
+const run = activeTab => {
 	const targetTabId = activeTab.id;
 	chrome.windows.getCurrent({
 		populate: true,
@@ -35,7 +33,23 @@ chrome.action.onClicked.addListener(activeTab => {
 			});
 		}
 	});
+};
+
+// クリック時
+chrome.action.onClicked.addListener(run);
+
+// ショートカットキー
+chrome.commands.onCommand.addListener(command => {
+	if (command === 'execute') {
+		chrome.tabs.query({
+			active: true,
+			lastFocusedWindow: true,
+		}).then(([activeTab]) => {
+			run(activeTab);
+		});
+	}
 });
+
 
 /***********************************************/
 
