@@ -1,36 +1,36 @@
-"use strict";
+'use strict';
 
 // ショートカットキー
 // クリック時
 chrome.browserAction.onClicked.addListener(activeTab => {
 	const targetTabId = activeTab.id;
 	chrome.windows.getCurrent({
-		populate: true
+		populate: true,
 	}, currentWindow => {
-		const rightTabs = currentWindow.tabs.reduce(({rightTabs, isRight}, tab) => {
+		const targetTabs = currentWindow.tabs.reduce(({rightTabs, isRight}, tab) => {
 			// 今のタブより右にあるものを新しいwindowに移動
 			if (isRight) rightTabs.push(tab.id);
 			if (tab.id === targetTabId) isRight = true;
 			return {rightTabs, isRight};
 		}, {rightTabs: [], isRight: false}).rightTabs;
-		if (rightTabs.length === 0) {
+		if (targetTabs.length === 0) {
 			// 最後のタブの場合、今のタブだけ新しいウィンドウに移動
-			rightTabs.push(targetTabId);
+			targetTabs.push(targetTabId);
 		}
-		if (rightTabs.length) {
+		if (targetTabs.length) {
 			chrome.windows.create({
-				tabId: rightTabs[0],
+				tabId: targetTabs[0],
 				top: 0,
 				left: 0,
-				incognito: currentWindow.incognito
+				incognito: currentWindow.incognito,
 			}, createdWindow => {
 				const wId = createdWindow.id;
 				chrome.windows.update(wId, {
-					state: "maximized"
+					state: 'maximized',
 				});
-				chrome.tabs.move(rightTabs, {
+				chrome.tabs.move(targetTabs, {
 					windowId: wId,
-					index: -1
+					index: -1,
 				});
 			});
 		}
@@ -40,13 +40,13 @@ chrome.browserAction.onClicked.addListener(activeTab => {
 /***********************************************/
 
 
-const ID_OPEN_AT_MAIN_DISPLAY = "open-at-main-display";
+const ID_OPEN_AT_MAIN_DISPLAY = 'open-at-main-display';
 
 function createContextMenus() {
 	chrome.contextMenus.create({
-		title: "リンクを新しいwindowで開く（メインディスプレイ最大化）",
-		contexts: ["link"],
-		id: ID_OPEN_AT_MAIN_DISPLAY
+		title: 'リンクを新しいwindowで開く（メインディスプレイ最大化）',
+		contexts: ['link'],
+		id: ID_OPEN_AT_MAIN_DISPLAY,
 	});
 }
 
@@ -59,10 +59,10 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 			url: info.linkUrl,
 			top: 0,
 			left: 0,
-			incognito: tab.incognito
+			incognito: tab.incognito,
 		}, createdWindow => {
 			chrome.windows.update(createdWindow.id, {
-				state: "maximized"
+				state: 'maximized',
 			});
 		});
 	}
