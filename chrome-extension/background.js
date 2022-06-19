@@ -7,19 +7,19 @@ chrome.browserAction.onClicked.addListener(activeTab => {
 	chrome.windows.getCurrent({
 		populate: true,
 	}, currentWindow => {
-		const rightTabs = currentWindow.tabs.reduce(({rightTabs, isRight}, tab) => {
+		const targetTabs = currentWindow.tabs.reduce(({rightTabs, isRight}, tab) => {
 			// 今のタブより右にあるものを新しいwindowに移動
 			if (isRight) rightTabs.push(tab.id);
 			if (tab.id === targetTabId) isRight = true;
 			return {rightTabs, isRight};
 		}, {rightTabs: [], isRight: false}).rightTabs;
-		if (rightTabs.length === 0) {
+		if (targetTabs.length === 0) {
 			// 最後のタブの場合、今のタブだけ新しいウィンドウに移動
-			rightTabs.push(targetTabId);
+			targetTabs.push(targetTabId);
 		}
-		if (rightTabs.length) {
+		if (targetTabs.length) {
 			chrome.windows.create({
-				tabId: rightTabs[0],
+				tabId: targetTabs[0],
 				top: 0,
 				left: 0,
 				incognito: currentWindow.incognito,
@@ -28,7 +28,7 @@ chrome.browserAction.onClicked.addListener(activeTab => {
 				chrome.windows.update(wId, {
 					state: 'maximized',
 				});
-				chrome.tabs.move(rightTabs, {
+				chrome.tabs.move(targetTabs, {
 					windowId: wId,
 					index: -1,
 				});
