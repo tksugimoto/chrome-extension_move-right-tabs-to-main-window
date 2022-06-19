@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // ショートカットキー
 // クリック時
@@ -26,7 +26,7 @@ chrome.browserAction.onClicked.addListener(activeTab => {
 			}, createdWindow => {
 				const wId = createdWindow.id;
 				chrome.windows.update(wId, {
-					state: "maximized",
+					state: 'maximized',
 				});
 				chrome.tabs.move(rightTabs, {
 					windowId: wId,
@@ -40,12 +40,12 @@ chrome.browserAction.onClicked.addListener(activeTab => {
 /***********************************************/
 
 
-const ID_OPEN_AT_MAIN_DISPLAY = "open-at-main-display";
+const ID_OPEN_AT_MAIN_DISPLAY = 'open-at-main-display';
 
 function createContextMenus() {
 	chrome.contextMenus.create({
-		title: "リンクを新しいwindowで開く（メインディスプレイ最大化）",
-		contexts: ["link"],
+		title: 'リンクを新しいwindowで開く（メインディスプレイ最大化）',
+		contexts: ['link'],
 		id: ID_OPEN_AT_MAIN_DISPLAY,
 	});
 }
@@ -62,7 +62,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 			incognito: tab.incognito,
 		}, createdWindow => {
 			chrome.windows.update(createdWindow.id, {
-				state: "maximized",
+				state: 'maximized',
 			});
 		});
 	}
