@@ -58,7 +58,7 @@ const ID_OPEN_AT_MAIN_DISPLAY = 'open-at-main-display';
 
 function createContextMenus() {
 	chrome.contextMenus.create({
-		title: 'リンクを新しいwindowで開く（メインディスプレイ最大化）',
+		title: 'リンクを新しいwindowで開く（メインディスプレイ最大化）(&r)',
 		contexts: ['link'],
 		id: ID_OPEN_AT_MAIN_DISPLAY,
 	});
