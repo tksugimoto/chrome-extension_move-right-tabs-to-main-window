@@ -2,7 +2,7 @@
 
 // ショートカットキー
 // クリック時
-chrome.browserAction.onClicked.addListener(activeTab => {
+chrome.action.onClicked.addListener(activeTab => {
 	const targetTabId = activeTab.id;
 	chrome.windows.getCurrent({
 		populate: true,
